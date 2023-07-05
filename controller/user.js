@@ -100,10 +100,21 @@ const login =(req,res)=>{
  }
 
 const logout=(req,res)=>{
-    res.send({msg:"logout page"})
+   res.cookie("tokenName",{
+      expires:new Date(Date.now())
+  })
+  res.status(200).json({
+      msg:"user LogedOut"
+  })
 }
 
-module.exports={register,login, logout}
+const allUsers = (req,res)=>{
+   if(storedData){
+       res.send(storedData)
+   }
+}
+
+module.exports={register,login, logout,allUsers}
 
 
 // const storedData = []
