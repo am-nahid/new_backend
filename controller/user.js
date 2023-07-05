@@ -52,52 +52,59 @@ const register=(req,res)=>{
 
 
 
-// const login=(req,res)=>{
-//     const data = req.body;
-//     const user = storedData.find((item) => item.email === data.email);
+const login=(req,res)=>{
+    const data = req.body;
+    const user = storedData.find((item) => item.email === data.email);
  
 
-//     if(user.email ===data.email){
-//         // res.send("user has logged in succesfully")
-//         const validate = bcrypt.compareSync(data.password,user.password)
-//         const token = jwt.sign({user:user.email},secretKey,{expiresIn:3600})
-//         if(validate){
-//             res.send({
-//                 email:user.email,
-//                password:user.password,
-//                token:token
-//             })
-//         }    }
-//     else{
-//         res.send("User has not registered, please try again")
-//     }
-// }
-const login =(req,res)=>{
-    const data = req.body
-    const user = storedData.find((item)=>item.email===data.email)
-    if(user  && user.email ===data.email){
-       const validate = bcrypt.compareSync(data.password,user.password)
-       const token = jwt.sign({user:user.email},secretKey,{expiresIn:"1d"})
-       if(validate){
-          const userInfo = {
-             email:user.email,
-             password:user.password ,
-             token:token
-          }
-          const options = {
-             expires: new Date(
-                Date.now()+5*24*60*60
-             )
-           }
-          res.status(200).cookie("tokenName",token,options).send(userInfo)
-       } else{
-          res.send("Invalid Password")
+    if(user.email ===data.email){
+        // res.send("user has logged in succesfully")
+        const validate = bcrypt.compareSync(data.password,user.password)
+        const token = jwt.sign({user:user.email},secretKey,{expiresIn:3600})
+        if(validate){
+         const userInfo = {
+            email:user.email,
+            password:user.password ,
+            token:token
+         }
+         
+        }  const options = {
+         expires: new Date(
+            Date.now()+5*24*60*60
+         )
        }
-    }else{
-       res.send("user has not registered")
+      res.status(200).cookie("tokenName",token,options).send(userInfo)
+          }
+    else{
+        res.send("User has not registered, please try again")
     }
+}
+// const login =(req,res)=>{
+//     const data = req.body
+//     const user = storedData.find((item)=>item.email===data.email)
+//     if(user  && user.email ===data.email){
+//        const validate = bcrypt.compareSync(data.password,user.password)
+//        const token = jwt.sign({user:user.email},secretKey,{expiresIn:"1d"})
+//        if(validate){
+//           const userInfo = {
+//              email:user.email,
+//              password:user.password ,
+//              token:token
+//           }
+//           const options = {
+//              expires: new Date(
+//                 Date.now()+5*24*60*60
+//              )
+//            }
+//           res.status(200).cookie("tokenName",token,options).send(userInfo)
+//        } else{
+//           res.send("Invalid Password")
+//        }
+//     }else{
+//        res.send("user has not registered")
+//     }
  
- }
+//  }
 
 const logout=(req,res)=>{
    res.cookie("tokenName",{
