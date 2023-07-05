@@ -68,7 +68,7 @@ const login=(req,res)=>{
             token:token
          }
          
-        }  const options = {
+         const options = {
          expires: new Date(
             Date.now()+5*24*60*60
          )
@@ -76,8 +76,12 @@ const login=(req,res)=>{
       res.status(200).cookie("tokenName",token,options).send(userInfo)
           }
     else{
-        res.send("User has not registered, please try again")
+        res.send("wrong password")
     }
+   }
+   else{
+      res.send("User has not registered, please try again")
+  }
 }
 // const login =(req,res)=>{
 //     const data = req.body
