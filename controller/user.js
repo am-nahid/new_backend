@@ -75,7 +75,7 @@ const register=(req,res)=>{
 const login =(req,res)=>{
     const data = req.body
     const user = storedData.find((item)=>item.email===data.email)
-    if(user){
+    if(user  && user.email ===data.email){
        const validate = bcrypt.compareSync(data.password,user.password)
        const token = jwt.sign({user:user.email},secretKey,{expiresIn:"1d"})
        if(validate){
